@@ -1,0 +1,72 @@
+{% extends 'store/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container card p-3">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-4">
+          <h5 class="mt-2">Total: <strong> {{ total }} items</strong></h5>
+        </div>
+        <div class="col-md-4">
+          <h5 class="mt-2">Amount: <strong> {{ amount|floatformat:2 }} €</strong></h5>
+        </div>
+        <div class="col-md-4 d-flex flex-row-reverse">
+          <a class="btn btn-success" href="{% url 'checkout' %}">Checkout</a>
+          <a class="btn btn-primary mr-3" href="{% url 'store' %}">Continue Shopping</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container card p-3 mt-3">
+  <div class="row text-center">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-3">
+          <strong>Item</strong>
+        </div>
+        <div class="col-md-2">
+          <strong>Price</strong>
+        </div>
+        <div class="col-md-2">
+          <strong>Quantity</strong>
+        </div>
+        <div class="col-md-2">
+          <strong>Total</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% for item in items %}
+  <div class="row border-top m-2 pt-3">
+    <div class="col-md-12">
+      <div class="row text-center">
+        <div class="col-md-3 text-left mt-3">
+          <img class="small-image" src="{{ item.imageURL }}" />
+        </div>
+        <div class="col-md-3 mt-4">
+          <p>{{ item.name }}</p>
+        </div>
+        <div class="col-md-2 mt-4">
+          <p>{{ item.price|floatformat:2 }} €</p>
+        </div>
+        <div class="col-md-2">
+          <img data-product="{{ item.id }}" data-action="add" class="arrow update-btn" 
+            src="{% static 'store/img/up.png' %}" />
+          <p>{{ item.quantity }}</p>
+          <img data-product="{{ item.id }}" data-action="remove" class="arrow down update-btn" 
+            src="{% static 'store/img/down.png' %}" />
+        </div>
+        <div class="col-md-2 mt-4">
+          <p>{{ item.total|floatformat:2 }} €</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock content %}
